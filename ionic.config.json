@@ -1,0 +1,7 @@
+{
+  "name": "EasyTime",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}
