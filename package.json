@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "cryptiles": ">=4.1.2",
+    "hoek": ">=4.2.1",
     "@angular/animations": "5.2.11",
     "@angular/common": "5.2.11",
     "@angular/compiler": "5.2.11",
