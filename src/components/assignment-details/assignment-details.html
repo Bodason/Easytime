@@ -1,0 +1,34 @@
+<!-- GeneratedAssignmentDetailsComponent:  template for the AssignmentDetailsComponent component -->
+<ion-header> 
+	<ion-toolbar>
+		<ion-title>
+			<ion-row align-items-center>
+				<ion-col float-left>
+					<div class="toolbar-title">{{detailsData['Name']}}</div>
+				</ion-col>
+				<ion-col>
+					<button float-right color="light" (click)=closeModal() ion-button round> Close </button>
+				</ion-col>
+			</ion-row>
+		</ion-title> 
+	</ion-toolbar>
+</ion-header>
+<ion-content>
+	<ion-grid>
+		<ion-row align-items-center *ngFor="let detail of details">
+			<ion-col> {{ detail }} </ion-col>
+			<ion-col> {{ detailsData[detail] }} </ion-col>
+		</ion-row>
+	</ion-grid>
+
+	<ion-footer>
+		<ion-toolbar>
+			<div float-left class="footer-button-style">
+				<button block color="primary" (click)="editAssignment()" ion-button> Edit </button>
+			</div>
+			<div float-right class="footer-button-style">
+				<button block color="danger" (click)="removeAssignment()" ion-button> Delete </button>
+			</div>
+			</ion-toolbar>
+	  </ion-footer>
+</ion-content>

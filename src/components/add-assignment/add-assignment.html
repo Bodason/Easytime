@@ -1,0 +1,33 @@
+<ion-header> 
+	<ion-toolbar>
+		<ion-title>
+			<ion-row align-items-center>
+				<ion-col float-left>
+					<div class="toolbar-title">Add assignment</div>
+				</ion-col>
+				<ion-col>
+					<button float-right color="light" (click)=closeModal() ion-button round> Close </button>
+				</ion-col>
+			</ion-row>
+		</ion-title> 
+	</ion-toolbar>
+</ion-header>
+
+<ion-content>
+	<ion-item [formGroup]="formGroup">
+		<ion-label stacked> Assignment </ion-label>
+		<ion-input type=text formControlName="Name"> </ion-input>
+	</ion-item>
+	<ion-item [formGroup]="formGroup">
+		<ion-label stacked> Description </ion-label>
+		<ion-input type=text formControlName="Description"> </ion-input>
+	</ion-item>
+</ion-content>
+
+<ion-footer>
+	<ion-grid>
+		<ion-row>
+			<button ion-button full color="secondary" (click)="createAssignment()" > Create </button>
+		</ion-row>
+	</ion-grid>
+</ion-footer>

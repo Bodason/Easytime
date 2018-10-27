@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+    	
+
+			<ion-row align-items-center>
+				<ion-col float-left>
+					<div class="toolbar-title">Assignments</div>
+				</ion-col>
+				<ion-col>
+					<button (click)="addAssignment()" float-right color="light" ion-button round> 
+						<ion-icon name="add"> </ion-icon> 
+					</button>
+				</ion-col>
+			</ion-row>
+
+    </ion-title>
+
+
+  </ion-navbar>
+</ion-header>
+
+<ion-content offset-1 col-11>
+	<ion-row class="bold"> 
+		<ion-col>Name</ion-col>
+		<ion-col>Duration</ion-col>
+		<ion-col></ion-col>
+		<ion-col></ion-col>
+	</ion-row>
+	<div *ngFor="let assignment of assignments, let i = index">
+		<ion-row align-items-center>
+			<ion-col> {{assignment['Name']}}</ion-col>
+			<ion-col class="inProgressAnimation" *ngIf="assignment['InProgress']"> {{toHHMMSS(assignment['timeElapsed']) }}</ion-col>
+			<ion-col *ngIf="!assignment['InProgress']"> {{toHHMMSS(assignment['timeElapsed'])}}</ion-col>
+			<ion-col *ngIf="!assignment['InProgress']">  
+				<button ion-button color="secondary" (click)="startTimer(i)">
+					<ion-icon name="play"></ion-icon>
+				</button>
+			</ion-col>
+			<ion-col *ngIf="assignment['InProgress']">  
+				<button ion-button color="danger" (click)="stopTimer(assignment, i)">
+					<ion-icon name="pause"></ion-icon>
+				</button>
+			</ion-col>
+			<ion-col> 
+				<button ion-button (click)=getDetails(assignment)> Details</button>
+			</ion-col>
+		</ion-row>
+	</div>
+</ion-content>
