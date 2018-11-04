@@ -1,79 +1,72 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Assignment } from '../../classes/Assignment';
-import { Subscription } from 'rxjs/Subscription';
-import { Observable, Subject } from 'rxjs/rx';
-import { of } from 'rxjs/observable/of';
-
-
-export class TimerObject extends Assignment{
-  timeSubscription?: Subscription;
-  timeSubject? : Subject<any>;
-  constructor(){
-    super();
-  }
-}
+import { Observable, Subject, Subscription } from 'rxjs/rx';
+import { TimerObject } from './timerObject';
+import { AssignmentsLibraryProvider } from '../assignments-library/assignments-library';
 
 @Injectable()
 export class TimerProvider {
-  timerObjects: TimerObject[] = [];
   timeObservable: Observable<any>;
+  timerObservables: {Id:string, timerSubscription: Subscription}[] = [];
 
-  constructor() {
+  constructor(
+    private assignmentsLibrary: AssignmentsLibraryProvider
+  ) {
     this.timeObservable = Observable.timer(0,500);
   }
   
-  public getTime(assignment:Assignment): Subject<any>{
-    const index = this.indexOfTimer(assignment.Id);
-    return this.timerObjects[index].timeSubject;
+  public getTime(assignment:Assignment): Subject<any> {  
+    const timerObject = this.convertAssignmentToTimerObject(assignment);
+    return timerObject.timeSubject;
   }
 
-  public startTimer(timerObject: TimerObject|Assignment){
-    let timerIndex = this.indexOfTimer(timerObject.Id);
-    if(timerIndex === -1){
-      this.startNewTimer(timerObject)
-    } else {
-      this.startExistingTimer(this.timerObjects[timerIndex]);
+  convertAssignmentToTimerObject(assignment: Assignment): TimerObject{
+    const timerObject = new TimerObject();
+    if(assignment.Description) { timerObject.Description = assignment.Description;}
+    if(assignment.Duration) { timerObject.Duration = assignment.Duration;}
+    if(assignment.EndTime) { timerObject.EndTime = assignment.EndTime;}
+    if(assignment.Group) { timerObject.Group = assignment.Group;}
+    if(assignment.Id) { timerObject.Id = assignment.Id;}
+    if(assignment.InProgress) { timerObject.InProgress = assignment.InProgress;}
+    if(assignment.Name) { timerObject.Name = assignment.Name;}
+    if(assignment.StartTime) { timerObject.StartTime = assignment.StartTime;}
+    if(assignment.timeElapsed) { timerObject.timeElapsed = assignment.timeElapsed;}
+    timerObject.timeSubject = new Subject();
+    return timerObject
+  }
+
+  public async startTimer(assignment: Assignment): Promise<TimerObject>{
+    const storedAssignment = await this.assignmentsLibrary.getAssignment(assignment.Id);
+    storedAssignment.InProgress = true;
+    storedAssignment.StartTime = new Date();
+    await this.assignmentsLibrary.modifyAssignment(storedAssignment);
+    const updatedAssignment = await this.assignmentsLibrary.getAssignment(assignment.Id)
+
+    const newTimerObject = this.convertAssignmentToTimerObject(updatedAssignment);
+    
+    const initialTime = updatedAssignment.timeElapsed;
+    const timeObs = this.timeObservable.subscribe( (timeElapsedTimer: number) => {
+      const time = timeElapsedTimer/2;
+      newTimerObject.timeSubject.next(initialTime+time);
+    });
+
+    this.timerObservables.push({Id: assignment.Id, timerSubscription: timeObs });
+    return newTimerObject;
+  }
+
+  public async stopTimer(assignment: Assignment){
+    const storedAssignment = await this.assignmentsLibrary.getAssignment(assignment.Id);
+    storedAssignment.InProgress = false;
+    storedAssignment.EndTime = new Date();
+    let ElapsedTime = new Date(storedAssignment.EndTime).getTime() - new Date(storedAssignment.StartTime).getTime();
+    storedAssignment.timeElapsed += (ElapsedTime/1000);
+    await this.assignmentsLibrary.modifyAssignment(storedAssignment);
+
+    this.timerObservables.forEach( (timerObservable) => {
+      if(timerObservable.Id === assignment.Id){
+        timerObservable.timerSubscription.unsubscribe();
       }
-  }
-  
-  public stopTimer(timerObject: TimerObject|Assignment){
-    let timerIndex = this.indexOfTimer(timerObject.Id);
-    if(timerIndex > -1){
-      this.timerObjects[timerIndex].timeSubscription.unsubscribe();  
-    }
-  }
-
-  private startNewTimer(timerObject: TimerObject){
-    let newTimerObject = timerObject
-    newTimerObject['timeSubject'] = new Subject();
-    newTimerObject['timeSubscription'] = this.timeObservable
-      .subscribe(timeElapsedSinceStart => {
-          let timer = timerObject.timeElapsed + timeElapsedSinceStart /2;
-          newTimerObject['timeSubject'].next(timer);
-
-      });
-      this.timerObjects.push(newTimerObject);
-  }
-
-  private startExistingTimer(timerObject: TimerObject){
-    timerObject['timeSubject'] = new Subject();
-    timerObject['timeSubscription'] = this.timeObservable
-      .subscribe(timeElapsedSinceStart => {
-        let timer = timerObject.timeElapsed + timeElapsedSinceStart/2;
-        const index = this.indexOfTimer(timerObject.Id);
-        this.timerObjects[index]['timeSubject'].next(timer);
-      });  
-  }
-
-  private indexOfTimer(id: string): number{
-    let timerIndex = -1;
-    this.timerObjects.forEach((timerObject: Assignment, index: number) => {
-      if(timerObject.Id === id){
-        timerIndex = index;
-      }
-    })
-    return timerIndex;
+    });
   }
 
 }

@@ -34,8 +34,18 @@ export class AssignmentsLibraryProvider {
 				return assignments;
 			})
   } 
-  public get StaticAssignments(){
-  	return this.assignments;
+
+  public getAssignment(id:string): Promise<Assignment>{
+	return this.Assignments
+	  	.then( (assignments: Assignment[]) => {
+			let assignmentToReturn = new Assignment();
+			assignments.forEach( (assignment: Assignment) => {
+				if(assignment.Id === id){
+					assignmentToReturn = assignment;		
+				}
+			});
+			return assignmentToReturn;
+		  });
   }
 
   public addAssigment(assignment: Assignment): Promise<any>{
@@ -69,7 +79,7 @@ export class AssignmentsLibraryProvider {
 				return this.storage.set('Assignments-library',newAssignments);
 			})
 	}
-	public modifyAssignment(assignment: Assignment): Promise<any>{
+	public modifyAssignment(assignment: Assignment): Promise<Assignment[]>{
 		return this.storage.get('Assignments-library')
 			.then((assignments: Assignment[]) => {
 				assignments.forEach((element,index) => {
@@ -88,41 +98,4 @@ export class AssignmentsLibraryProvider {
 	public subscribeToAssignments(): Observable<any> {
 		return this.subject;
 	}
-
-	public startTimer(assignment: Assignment){
-		return this.storage.get('Assignments-library')
-			.then((assignments: Assignment[]) => {
-				assignments.forEach((element,index) => {
-					if(element.Id == assignment.Id){
-						assignments[index].InProgress = true;
-						assignments[index].StartTime = new Date() 
-					}
-				});
-				return assignments;
-			})
-			.then((newAssignments: Assignment[]) => {
-				this.subject.next(newAssignments);
-				return this.storage.set('Assignments-library',newAssignments);
-			})
-	}
-
-	public stopTimer(assignment: Assignment){
-		return this.storage.get('Assignments-library')
-			.then((assignments: Assignment[]) => {
-				assignments.forEach((element,index) => {
-					if(element.Id == assignment.Id){
-						assignments[index].InProgress = false;
-						assignments[index].EndTime = new Date(); 
-						let ElapsedTime = new Date(assignments[index].EndTime).getTime() - new Date(assignments[index].StartTime).getTime();
-						assignments[index].timeElapsed += (ElapsedTime/1000);
-					}
-				});
-				return assignments;
-			})
-			.then((newAssignments: Assignment[]) =>{
-				this.subject.next(newAssignments);
-				return this.storage.set('Assignments-library',newAssignments);
-			})
-	}
-
 }

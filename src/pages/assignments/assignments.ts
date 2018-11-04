@@ -7,7 +7,9 @@ import { ToastController } from 'ionic-angular';
 import { AssignmentDetailsComponent } from '../../components/assignment-details/assignment-details';
 import { AddAssignmentComponent } from '../../components/add-assignment/add-assignment';
 import { Subscription } from 'rxjs/Subscription';
-import { TimerProvider, TimerObject } from '../../providers/timer/timer';
+import { TimerProvider } from '../../providers/timer/timer';
+import { Subject } from 'rxjs';
+import { TimerObject } from '../../providers/timer/timerObject';
 
 @Component({
   selector: 'page-assignments',
@@ -16,8 +18,6 @@ import { TimerProvider, TimerObject } from '../../providers/timer/timer';
 @Injectable()
 export class AssignmentsPage {
   assignments: Array<Assignment>;
-  errorMsg: any;
-  hello: any;
   assignmentSubscription: Subscription;
   
   constructor(	
@@ -43,6 +43,7 @@ export class AssignmentsPage {
       toast.present();
     }) 
   }
+
   ionViewWillUnload(){
     if(this.assignmentSubscription){
       this.assignmentSubscription.unsubscribe();
@@ -56,31 +57,28 @@ export class AssignmentsPage {
         this.assignments = data;
       })
   }
+
   getDetails(assignment: Assignment){
     let modal = this.modalController.create(AssignmentDetailsComponent, {Assignment: assignment});
     modal.onDidDismiss((assignments: Assignment[]) => {})
     modal.present();
   }
+
   addAssignment(){
     let modal = this.modalController.create(AddAssignmentComponent);
     modal.onDidDismiss((assignment: Assignment) => {});
     modal.present();
   }
-  startTimer(i: number){
-    this.assignmentsLibrary.startTimer(this.assignments[i])
-      .then( (data ) => { 
-        this.assignments[i] = data[i]
-      
-      })
-    this.timer.startTimer(this.assignments[i]);
-    this.timer.getTime(this.assignments[i]).subscribe((data: number) => {
+
+  async startTimer(i: number){
+    let timerObject = await this.timer.startTimer(this.assignments[i])
+    timerObject.timeSubject.subscribe( (data) => {
       this.assignments[i].timeElapsed = data;
     });
-  }
+ }
+
   stopTimer(assignment: Assignment, i){
-    this.assignmentsLibrary.stopTimer(assignment);
     this.timer.stopTimer(assignment);
-  
   }
 
   toHHMMSS(seconds: any): any {
