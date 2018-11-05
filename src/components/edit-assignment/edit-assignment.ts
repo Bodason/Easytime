@@ -37,7 +37,7 @@ export class EditAssignmentComponent {
     let changedAssignmentData: Assignment = new Assignment();
     changedAssignmentData.Id = this.assignmentData.Id;
     changedAssignmentData.InProgress = this.assignmentData.InProgress;
-    changedAssignmentData.timeElapsed = this.formGroup.get("timeElapsed").value;
+    changedAssignmentData.timeElapsed = parseFloat(this.formGroup.get("timeElapsed").value);
     changedAssignmentData.Name = this.formGroup.get("Name").value;
     changedAssignmentData.Description = this.formGroup.get("Description").value;
   	this.viewController.dismiss(changedAssignmentData);
