@@ -10,7 +10,6 @@ import { IonicStorageModule } from '@ionic/storage';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { AssignmentsPage } from '../pages/assignments/assignments';
-import { ListPage } from '../pages/list/list';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -20,13 +19,15 @@ import { AssignmentDetailsComponent } from '../components/assignment-details/ass
 import { AddAssignmentComponent } from '../components/add-assignment/add-assignment';
 import { EditAssignmentComponent } from '../components/edit-assignment/edit-assignment';
 import { TimerProvider } from '../providers/timer/timer';
+import { StatisticsPage } from '../pages/statistics/statistics';
+
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     AssignmentsPage,
-    ListPage,
+    StatisticsPage,
     AssignmentDetailsComponent,
     AddAssignmentComponent,
     EditAssignmentComponent
@@ -43,7 +44,7 @@ import { TimerProvider } from '../providers/timer/timer';
     MyApp,
     HomePage,
     AssignmentsPage,
-    ListPage,
+    StatisticsPage,
     AssignmentDetailsComponent,
     AddAssignmentComponent,
     EditAssignmentComponent
@@ -51,7 +52,7 @@ import { TimerProvider } from '../providers/timer/timer';
   providers: [
     NativeStorage,
     StatusBar,
-    SplashScreen,
+      SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     HttpClient,
     AssignmentsLibraryProvider,

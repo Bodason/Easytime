@@ -7,12 +7,13 @@ import { AssignmentsLibraryProvider } from '../assignments-library/assignments-l
 @Injectable()
 export class TimerProvider {
   timeObservable: Observable<any>;
+  timerInterval = 200;
   timerObservables: {Id:string, timerSubscription: Subscription}[] = [];
 
   constructor(
     private assignmentsLibrary: AssignmentsLibraryProvider
   ) {
-    this.timeObservable = Observable.timer(0,500);
+    this.timeObservable = Observable.timer(0,this.timerInterval);
   }
   
   public getTime(assignment:Assignment): Subject<any> {  
@@ -46,7 +47,7 @@ export class TimerProvider {
     
     const initialTime = updatedAssignment.timeElapsed;
     const timeObs = this.timeObservable.subscribe( (timeElapsedTimer: number) => {
-      const time = timeElapsedTimer/2;
+      const time = timeElapsedTimer/(1000/this.timerInterval);
       newTimerObject.timeSubject.next(initialTime+time);
     });
 

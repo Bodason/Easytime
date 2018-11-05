@@ -1,8 +1,8 @@
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { Component } from '@angular/core';
 
+
 import { ViewController } from 'ionic-angular';
-import { AssignmentsLibraryProvider } from '../../providers/assignments-library/assignments-library';
 import { Assignment } from '../../classes/Assignment';
 import { Guid } from '../../classes/guid';
 
@@ -21,7 +21,7 @@ export class EditAssignmentComponent {
   formGroup: FormGroup;
   text: string;
 
-  constructor(private viewController: ViewController, private assignmentsLibrary: AssignmentsLibraryProvider) {
+  constructor(private viewController: ViewController ) {
     this.assignmentData = this.viewController.data.Assignment;
     this.formGroup = new FormGroup({
   		Name: new FormControl(this.assignmentData.Name,[Validators.required]),
