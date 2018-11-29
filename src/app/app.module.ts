@@ -22,6 +22,8 @@ import { TimerProvider } from '../providers/timer/timer';
 import { StatisticsPage } from '../pages/statistics/statistics';
 
 
+import { PlotlyModule } from 'angular-plotly.js';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -34,6 +36,7 @@ import { StatisticsPage } from '../pages/statistics/statistics';
   ],
   imports: [
     BrowserModule,
+    PlotlyModule,
     HttpClientModule,
     ReactiveFormsModule,
     IonicModule.forRoot(MyApp),

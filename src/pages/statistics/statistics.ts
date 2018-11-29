@@ -19,12 +19,34 @@ export class StatisticsPage {
   assignments: Assignment[];
   constructor(public navCtrl: NavController, 
               public navParams: NavParams, 
-              public assignmentsLibrary: AssignmentsLibraryProvider) {
+              public assignmentsLibrary: AssignmentsLibraryProvider,
+              ) {
   }
 
   async ionViewDidLoad() {
     console.log('ionViewDidLoad StatisticsPage');
     this.assignments = await this.assignmentsLibrary.Assignments;
+
+    this.trace1.x = [];
+    this.trace1.y = [];
+
+    this.assignments.forEach((assignment: Assignment, index: number) => {
+      this.trace1.x.push(assignment.timeElapsed)
+      this.trace1.y.push(assignment.Name);
+
+    })
   }
+
+  public trace1 = { 
+    x: [], 
+    y: [], 
+    type: 'bar' ,
+    orientation: 'h',
+  };
+
+  public graph = {
+    data: [this.trace1],
+    layout: {width: 320, height: 400, title: 'A Fancy Plot'}
+  };
 
 }
