@@ -31,8 +31,8 @@ export class StatisticsPage {
     this.trace1.y = [];
 
     this.assignments.forEach((assignment: Assignment, index: number) => {
-      this.trace1.x.push(assignment.timeElapsed)
-      this.trace1.y.push(assignment.Name);
+      this.trace1.x.push(assignment.Name)
+      this.trace1.y.push(assignment.timeElapsed);
 
     })
   }
@@ -41,12 +41,12 @@ export class StatisticsPage {
     x: [], 
     y: [], 
     type: 'bar' ,
-    orientation: 'h',
+    orientation: 'v',
   };
 
   public graph = {
     data: [this.trace1],
-    layout: {width: 320, height: 400, title: 'A Fancy Plot'}
+    layout: {width: 320, height: 400, title: 'Bar Plot'}
   };
 
 }

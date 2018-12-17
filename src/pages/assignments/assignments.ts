@@ -8,8 +8,6 @@ import { AssignmentDetailsComponent } from '../../components/assignment-details/
 import { AddAssignmentComponent } from '../../components/add-assignment/add-assignment';
 import { Subscription } from 'rxjs/Subscription';
 import { TimerProvider } from '../../providers/timer/timer';
-import { Subject } from 'rxjs';
-import { TimerObject } from '../../providers/timer/timerObject';
 
 @Component({
   selector: 'page-assignments',
@@ -70,10 +68,10 @@ export class AssignmentsPage {
     modal.present();
   }
 
-  async startTimer(i: number){
-    let timerObject = await this.timer.startTimer(this.assignments[i])
+  async startTimer(index: number){
+    let timerObject = await this.timer.startTimer(this.assignments[index])
     timerObject.timeSubject.subscribe( (data) => {
-      this.assignments[i].timeElapsed = data;
+      this.assignments[index].timeElapsed = data;
     });
  }
 
