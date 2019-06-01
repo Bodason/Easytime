@@ -4,7 +4,6 @@ import { Component } from '@angular/core';
 
 import { ViewController } from 'ionic-angular';
 import { Assignment } from '../../classes/Assignment';
-import { Guid } from '../../classes/guid';
 
 /**
  * Generated class for the EditAssignmentComponent component.

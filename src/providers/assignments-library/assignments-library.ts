@@ -1,12 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { NativeStorage } from '@ionic-native/native-storage';
 import { Platform } from 'ionic-angular/platform/platform';
 import { Storage } from '@ionic/storage';
 
 import { Assignment } from '../../classes/Assignment';
 import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
 import { Subject } from 'rxjs/Subject';
 
 /*
