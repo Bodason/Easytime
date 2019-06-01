@@ -33,3 +33,7 @@ $RECYCLE.BIN/
 .DS_Store
 Thumbs.db
 UserInterfaceState.xcuserstate
+/5.0.0
+/6.0.0
+/EasyTime.code-workspace
+/typings/cordova-typings.d.ts

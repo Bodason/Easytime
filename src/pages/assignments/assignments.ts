@@ -29,17 +29,8 @@ export class AssignmentsPage {
             this.getAssignments();
           }
 
-  getAssignments(){
-    this.assignmentsLibrary.Assignments
-      .then((data:Assignment[]) => { console.log("success fetching assignments from storage") })
-      .catch((err) => {
-        let toast = this.toastr.create({
-                  message:("source="+err.source+", code="+err.code+", exception: "+err.exception),
-                  position:'bottom',
-                  showCloseButton:true,
-                })
-      toast.present();
-    }) 
+  async getAssignments(): Promise<Assignment[]>{
+    return await this.assignmentsLibrary.Assignments; 
   }
 
   ionViewWillUnload(){
