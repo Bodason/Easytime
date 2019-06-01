@@ -22,13 +22,15 @@
 	</ion-grid>
 
 	<ion-footer>
-		<ion-toolbar>
-			<div float-left class="footer-button-style">
-				<button block color="primary" [disabled]="detailsData['InProgress']" (click)="editAssignment()" ion-button> Edit </button>
-			</div>
-			<div float-right class="footer-button-style">
-				<button block color="danger" [disabled]="detailsData['InProgress']"  (click)="removeAssignment()" ion-button> Delete </button>
-			</div>
-			</ion-toolbar>
-	  </ion-footer>
+		<ion-grid>
+			<ion-row>
+				<div float-left class="footer-button-style">
+					<button block color="primary" [disabled]="detailsData['InProgress']" (click)="editAssignment()" ion-button> Edit </button>
+				</div>
+				<div float-right class="footer-button-style">
+					<button block color="danger" [disabled]="detailsData['InProgress']"  (click)="removeAssignment()" ion-button> Delete </button>
+				</div>
+			</ion-row>
+		</ion-grid>
+	</ion-footer>
 </ion-content>

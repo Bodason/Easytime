@@ -34,10 +34,10 @@ $app-direction: ltr;
 // The "primary" color is the only required color in the map.
 
 $colors: (
-  primary:    #488aff,
-  secondary:  #32db64,
-  danger:     #f53d3d,
-  light:      #f4f4f4,
+  primary:    darken(#488aff, 15%),
+  secondary:  darken(#32db64, 15%),
+  danger:     darken(#f53d3d, 15%),
+  light:      darken(#f4f4f4, 15%),
   dark:       #222
 );
 
@@ -59,8 +59,14 @@ $colors: (
 // App Windows Variables
 // --------------------------------------------------
 // Windows only Sass variables can go here
+$EZT-background-color: lighten(black, 15%);
 
+$text-color: darken(white, 20%);
+$background-color: $EZT-background-color;
 
+// Toolbar styles
+$toolbar-background: darken(red, 30%);
+$toolbar-border-color: $EZT-background-color;
 
 
 // App Theme
