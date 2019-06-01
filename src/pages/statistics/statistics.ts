@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AssignmentsLibraryProvider } from '../../providers/assignments-library/assignments-library';
 import { Assignment } from '../../classes/Assignment';
 
+
 /**
  * Generated class for the StatisticsPage page.
  *
@@ -42,11 +43,30 @@ export class StatisticsPage {
     y: [], 
     type: 'bar' ,
     orientation: 'v',
+    marker: {
+      color: '#660000'
+    }
   };
 
   public graph = {
     data: [this.trace1],
-    layout: {width: 320, height: 400, title: 'Bar Plot'}
+    layout: {
+      width: 320, 
+      height: 400, 
+      title: 'Bar Plot', 
+
+      plot_bgcolor:"#262626", 
+      paper_bgcolor:"#262626",
+      xaxis: {
+        showticklabels: true,
+        tickangle: 'auto',
+        tickfont: {
+          family: 'Old Standard TT, serif',
+          size: 12,
+          color: 'white'
+        },
+      },
+    },
   };
 
 }
