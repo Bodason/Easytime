@@ -10,6 +10,6 @@
 <ion-content padding>
   Welcome to statistics page
 
-  <plotly-plot *ngIf="graph" [data]="graph.data" [layout]="graph.layout"></plotly-plot>
+  <plotly-plot *ngIf="graph" [data]="graph.data" [config]="{ displayModeBar: false }" [layout]="graph.layout"></plotly-plot>
   
 </ion-content>
