@@ -21,8 +21,24 @@ import { EditAssignmentComponent } from '../components/edit-assignment/edit-assi
 import { TimerProvider } from '../providers/timer/timer';
 import { StatisticsPage } from '../pages/statistics/statistics';
 
-
 import { PlotlyModule } from 'angular-plotly.js';
+
+import { AngularFireModule } from '@angular/fire';
+// import { AngularFirestoreModule } from '@angular/fire/firestore';
+// import { AngularFireStorageModule } from '@angular/fire/storage';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+
+// 2. Add your credentials from step 1
+const config = {
+  apiKey: "AIzaSyCE6jKrfzT08Z46dTu4CTo_qMlp-se1klw",
+  authDomain: "easytimefcm.firebaseapp.com",
+  databaseURL: "https://easytimefcm.firebaseio.com",
+  projectId: "easytimefcm",
+  storageBucket: "easytimefcm.appspot.com",
+  messagingSenderId: "306218046889",
+  appId: "1:306218046889:web:ddc03ab7a08108f4"
+};
+
 
 @NgModule({
   declarations: [
@@ -41,6 +57,8 @@ import { PlotlyModule } from 'angular-plotly.js';
     ReactiveFormsModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
+    AngularFireModule.initializeApp(config),
+    AngularFireAuthModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -55,7 +73,7 @@ import { PlotlyModule } from 'angular-plotly.js';
   providers: [
     NativeStorage,
     StatusBar,
-      SplashScreen,
+    SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     HttpClient,
     AssignmentsLibraryProvider,
