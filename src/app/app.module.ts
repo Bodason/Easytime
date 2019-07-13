@@ -1,3 +1,5 @@
+import { EztNavbarComponent } from './../components/ezt-navbar/ezt-navbar';
+import { LoginPage } from './../pages/login/login';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ErrorHandler, NgModule } from '@angular/core';
@@ -27,6 +29,7 @@ import { AngularFireModule } from '@angular/fire';
 // import { AngularFirestoreModule } from '@angular/fire/firestore';
 // import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { LoginProvider } from '../providers/login/login';
 
 // 2. Add your credentials from step 1
 const config = {
@@ -43,12 +46,14 @@ const config = {
 @NgModule({
   declarations: [
     MyApp,
+    LoginPage,
     HomePage,
     AssignmentsPage,
     StatisticsPage,
     AssignmentDetailsComponent,
     AddAssignmentComponent,
-    EditAssignmentComponent
+    EditAssignmentComponent,
+    EztNavbarComponent
   ],
   imports: [
     BrowserModule,
@@ -63,12 +68,14 @@ const config = {
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
+    LoginPage,
     HomePage,
     AssignmentsPage,
     StatisticsPage,
     AssignmentDetailsComponent,
     AddAssignmentComponent,
-    EditAssignmentComponent
+    EditAssignmentComponent,
+    EztNavbarComponent
   ],
   providers: [
     NativeStorage,
@@ -78,7 +85,8 @@ const config = {
     HttpClient,
     AssignmentsLibraryProvider,
     DatePipe,
-    TimerProvider
+    TimerProvider,
+    LoginProvider
   ]
 })
 export class AppModule {}

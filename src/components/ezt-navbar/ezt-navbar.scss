@@ -1,0 +1,22 @@
+$borderColor: #262626;
+
+ezt-navbar {
+    .signed-in-icon{
+        color: white;
+        transform: translate(-20px, 0px);
+        border: 3px solid $borderColor;
+        border-radius: 85px;
+        font-size: 25px;
+        padding: 5px 20px 5px 20px;
+        background-color: #4a49498c;
+    }
+    .signed-out-icon{
+        color: darken(white, 50%);
+        transform: translate(-20px, 0px);
+        border: 3px solid $borderColor;
+        border-radius: 85px;
+        font-size: 25px;
+        padding: 5px 20px 5px 20px;
+        background-color: black;
+    }
+}

@@ -26,7 +26,7 @@ export class StatisticsPage {
 
   async ionViewDidLoad() {
     console.log('ionViewDidLoad StatisticsPage');
-    this.assignments = await this.assignmentsLibrary.Assignments;
+    this.assignments = await this.assignmentsLibrary.getAssignments();
 
     this.trace1.x = [];
     this.trace1.y = [];

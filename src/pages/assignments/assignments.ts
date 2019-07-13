@@ -30,7 +30,7 @@ export class AssignmentsPage {
           }
 
   async getAssignments(): Promise<Assignment[]>{
-    return await this.assignmentsLibrary.Assignments; 
+    return await this.assignmentsLibrary.getAssignments(); 
   }
 
   ionViewWillUnload(){

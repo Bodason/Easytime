@@ -1,47 +1,12 @@
-<ion-header>
-  <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>Home</ion-title>
-  </ion-navbar>
-</ion-header>
+<ezt-navbar [name]="'Home'"></ezt-navbar>
 
 <ion-content>
 
-  <h3 offset-1> Login page </h3>
+  <h3 offset-1 col-11> Home page </h3>
 
   <ion-grid>
-    <ion-row>
-      <ion-col>
-          <ion-item [formGroup]="formGroup">
-              <ion-label stacked> Email </ion-label>
-              <ion-input type=text formControlName="username"> </ion-input>
-            </ion-item>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-          <ion-item [formGroup]="formGroup">
-              <ion-label stacked> Password </ion-label>
-              <ion-input type="password" formControlName="password"> </ion-input>
-            </ion-item>
-      </ion-col>
-    </ion-row>
+    <p offset-1 col-11> Here we place some logic for showing a dashboard </p>
   </ion-grid>
-
-
-  <ion-row *ngIf="isCordova" offset-1>
-    <ion-col>
-      <button (click)="send()" [disabled]="formGroup.invalid" color="light" ion-button round> send </button>
-    </ion-col>
-  </ion-row>
-
-  <ion-row *ngIf="isCordova" offset-1>
-    <ion-col>
-      {{ callback | json }}
-    </ion-col>
-  </ion-row>
 
 
 

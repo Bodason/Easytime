@@ -1,0 +1,12 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-row>
+      <ion-title> {{ name }} </ion-title>
+      <ion-icon *ngIf="hasUser" name="unlock" (click)="promtSignOut()" float-right class="signed-in-icon"></ion-icon>
+      <ion-icon *ngIf="!hasUser" name="lock" (click)="promtSignIn()" float-right class="signed-out-icon"></ion-icon>
+    </ion-row>
+  </ion-navbar>
+</ion-header>

@@ -40,13 +40,11 @@ export class AssignmentDetailsComponent {
   }
   editAssignment(){
     let modal = this.modalController.create(EditAssignmentComponent, {Assignment: this.detailsData});
-    modal.onDidDismiss((assignmentData: Assignment) => {
+    modal.onDidDismiss( async (assignmentData: Assignment) => {
       if(assignmentData){
-        this.assignmentsLibrary.modifyAssignment(assignmentData)
-        .then((success) => {
+        await this.assignmentsLibrary.modifyAssignment(assignmentData)
           console.log("success in stored changed value");
           this.detailsData = assignmentData;
-        });
       }
     })
     modal.present();    

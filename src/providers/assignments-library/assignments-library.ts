@@ -15,82 +15,63 @@ import { Subject } from 'rxjs/Subject';
 */
 @Injectable()
 export class AssignmentsLibraryProvider {
-	assignments: Assignment[] = []; 
-	
+	assignments: Assignment[] = [];
+
 	constructor(
-		public platform:Platform, 
-		public http: HttpClient, 
-		public storage:Storage
-		) {
-  }
-  subject = new Subject();
-
-  public get Assignments(): Promise<any>{
-		  return this.storage.get('Assignments-library')
-		  	.then((assignments: Assignment[]) => {
-				this.subject.next(assignments);
-				return assignments;
-			})
-  } 
-
-  public getAssignment(id:string): Promise<Assignment>{
-	return this.Assignments
-	  	.then( (assignments: Assignment[]) => {
-			let assignmentToReturn = new Assignment();
-			assignments.forEach( (assignment: Assignment) => {
-				if(assignment.Id === id){
-					assignmentToReturn = assignment;		
-				}
-			});
-			return assignmentToReturn;
-		  });
-  }
-
-  public addAssigment(assignment: Assignment): Promise<any>{
-		return this.storage.get('Assignments-library')
-			.then((assignments: Assignment[]) => {
-				if(!assignments){
-					assignments =[];
-				}
-				assignments.push(assignment);
-				this.assignments = assignments;	
-				return assignments;
-			})
-			.then((assignments: Assignment[])=>{
-				this.subject.next(assignments);
-				return this.storage.set('Assignments-library',assignments);
-			})
-		
+		public platform: Platform,
+		public http: HttpClient,
+		public storage: Storage
+	) {
 	}
-	public removeAssignment(assignment: Assignment): Promise<any>{
-		return this.storage.get('Assignments-library')
-			.then((assignments: Assignment[]) =>{
-				assignments.forEach((element,index) => {
-					if(element.Id == assignment.Id){
-						assignments.splice(index,1);
-					}
-				})
-				return assignments;
-			})
-			.then((newAssignments: Assignment[]) =>{
-				this.subject.next(newAssignments);
-				return this.storage.set('Assignments-library',newAssignments);
-			})
+	subject = new Subject();
+
+	public async getAssignments(): Promise<any> {
+		const assignments = await this.storage.get('Assignments-library');
+		this.subject.next(assignments);
+		return assignments;
 	}
-	public modifyAssignment(assignment: Assignment): Promise<Assignment[]>{
-		return this.storage.get('Assignments-library')
-			.then((assignments: Assignment[]) => {
-				assignments.forEach((element,index) => {
-					if(element.Id == assignment.Id){
-						assignments[index] = assignment;
-					}
-				});
-				return assignments;
-			})
-			.then((newAssignments: Assignment[]) =>{
-				this.subject.next(newAssignments);
-				return this.storage.set('Assignments-library',newAssignments);
-			})
+
+	public async getAssignment(id: string): Promise<Assignment> {
+		const assignments = await this.getAssignments()
+		let assignmentToReturn = new Assignment();
+		assignments.forEach((assignment: Assignment) => {
+			if (assignment.Id === id) {
+				assignmentToReturn = assignment;
+			}
+		});
+		return assignmentToReturn;
+	}
+
+	public async addAssigment(assignment: Assignment): Promise<any> {
+		let assignments = await this.storage.get('Assignments-library')
+		if (!assignments) {
+			assignments = [];
+		}
+		assignments.push(assignment);
+		this.assignments = assignments;
+		this.subject.next(assignments);
+		return this.storage.set('Assignments-library', assignments);
+
+	}
+	public async removeAssignment(assignment: Assignment): Promise<any> {
+		let assignments = await this.storage.get('Assignments-library')
+		assignments.forEach((element, index) => {
+			if (element.Id == assignment.Id) {
+				assignments.splice(index, 1);
+			}
+		})
+		this.subject.next(assignments);
+		return this.storage.set('Assignments-library', assignments);
+	}
+	public async modifyAssignment(assignment: Assignment): Promise<Assignment[]> {
+		const assignments = await this.storage.get('Assignments-library')
+		assignments.forEach((element, index) => {
+			if (element.Id == assignment.Id) {
+				assignments[index] = assignment;
+			}
+		});
+		this.subject.next(assignments);
+		return this.storage.set('Assignments-library', assignments);
 	}
 
 	public subscribeToAssignments(): Observable<any> {
