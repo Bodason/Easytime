@@ -1,8 +1,8 @@
 import { LoginProvider } from './../../providers/login/login';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
-import { AngularFireAuth } from '@angular/fire/auth';
+import { IonicPage, NavController, NavParams, Platform, App, ViewController } from 'ionic-angular';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Pages } from '../../enums/pages';
 
 /**
  * Generated class for the LoginPage page.
@@ -17,17 +17,17 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
   templateUrl: 'login.html',
 })
 export class LoginPage {
+  pageName = Pages.Login;
   formGroup: any;
   isCordova: boolean;
-  callback: string;
   creds: firebase.User;
 
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
-    private fireBaseAuth: AngularFireAuth,
     private LoginProvider: LoginProvider,
-    private platform: Platform
+    private platform: Platform,
+    private viewController: ViewController
     ) {
       this.formGroup = new FormGroup({
         username: new FormControl('', [ Validators.required ]),
@@ -36,8 +36,19 @@ export class LoginPage {
       this.isCordova = this.platform.is('cordova');
 
   }
+
+  closeModal(){
+    this.viewController.dismiss();
+  }
+  
   async login(){
-    this.callback = await this.LoginProvider.signIn(this.formGroup.get('username').value, this.formGroup.get('password').value);
+    this.LoginProvider.signIn(this.formGroup.get('username').value, this.formGroup.get('password').value)
+    .then( ()=>{
+      this.viewController.dismiss();
+    })
+    .catch( (err)=>{
+      console.log(err);
+    });
   }
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');

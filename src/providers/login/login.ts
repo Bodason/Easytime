@@ -1,3 +1,4 @@
+import { ToastController } from 'ionic-angular';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -21,7 +22,8 @@ export class LoginProvider {
 
   constructor(
     public http: HttpClient,
-    public fireBaseAuth: AngularFireAuth
+    public fireBaseAuth: AngularFireAuth,
+    private toastr:ToastController
     ) {
   }
 
@@ -45,11 +47,22 @@ export class LoginProvider {
       const token = await creds.user.getIdToken();
       this.setUser({ UserName: creds.user.email, Token: token });
       await this.fireBaseAuth.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+      const toast = this.toastr.create({
+        message: 'Sucessfully logged in as ' + creds.user.email,
+        duration: 2000,
+        cssClass:'{background-color: green}'
+      });
+      toast.present();
       return 'Success authenticating';
     })
     .catch( (err:firebase.auth.Error) => {
-      console.log(err);
-      return 'Error authenticating';
+      const toast = this.toastr.create({
+        message: 'Login attempt failed',
+        duration: 2000,
+        cssClass:'{background-color: red}'
+      });
+      toast.present();
+      throw new Error('Error authenticating');
     })
   }
 

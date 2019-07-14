@@ -21,7 +21,14 @@ $app-direction: ltr;
 // the Sass variables found in Ionic's source scss files.
 // To view all the possible Ionic variables, see:
 // http://ionicframework.com/docs/theming/overriding-ionic-variables/
+$EZT-background-color: #d3d3d3;
 
+$text-color: lighten(black, 20%);
+$background-color: $EZT-background-color;
+
+// Toolbar styles
+$toolbar-background: #616271;
+$toolbar-border-color: $EZT-background-color;
 
 
 
@@ -59,14 +66,6 @@ $colors: (
 // App Windows Variables
 // --------------------------------------------------
 // Windows only Sass variables can go here
-$EZT-background-color: #262626;
-
-$text-color: darken(white, 20%);
-$background-color: $EZT-background-color;
-
-// Toolbar styles
-$toolbar-background: darken(red, 30%);
-$toolbar-border-color: $EZT-background-color;
 
 
 // App Theme

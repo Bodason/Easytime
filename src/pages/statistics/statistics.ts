@@ -1,3 +1,4 @@
+import { Pages } from './../../enums/pages';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AssignmentsLibraryProvider } from '../../providers/assignments-library/assignments-library';
@@ -18,6 +19,7 @@ import { Assignment } from '../../classes/Assignment';
 })
 export class StatisticsPage {
   assignments: Assignment[];
+  pageName = Pages.Statistics;
   constructor(public navCtrl: NavController, 
               public navParams: NavParams, 
               public assignmentsLibrary: AssignmentsLibraryProvider,
@@ -44,7 +46,7 @@ export class StatisticsPage {
     type: 'bar' ,
     orientation: 'v',
     marker: {
-      color: '#660000'
+      color: '#aaa'
     }
   };
 
@@ -55,15 +57,15 @@ export class StatisticsPage {
       height: 400, 
       title: 'Bar Plot', 
 
-      plot_bgcolor:"#262626", 
-      paper_bgcolor:"#262626",
+      plot_bgcolor:"#d3d3d3", 
+      paper_bgcolor:"#d3d3d3",
       xaxis: {
         showticklabels: true,
         tickangle: 'auto',
         tickfont: {
           family: 'Old Standard TT, serif',
           size: 12,
-          color: 'white'
+          color: 'black'
         },
       },
     },

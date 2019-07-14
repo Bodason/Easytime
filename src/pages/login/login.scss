@@ -1,3 +1,33 @@
 page-login {
+    .success-div{
+        color: rgba(0, 252, 0, 0.753);
+    }
+    .login-container{
+        // height: 80%;
+        // width: 100%;
+        // display: flex;
+        // justify-content: center;
+    }
 
+    $bgCol: lighten($EZT-background-color, 10%);
+    .login-container-bg-color{
+        .grid-root{  
+            .title-area{
+                background-color: white;
+                height: 40px;
+                font-size: 20px;
+                padding: 10px 0 0 40px;
+            }
+            box-shadow: 0px 3px 9px -2px;
+            background-color: $bgCol;
+            ion-row{
+                ion-col{
+                    background-color: $bgCol;
+                    ion-item{
+                        background-color: $bgCol;
+                    }
+                }
+            }
+        }
+    }
 }

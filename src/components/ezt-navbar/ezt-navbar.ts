@@ -1,7 +1,7 @@
 import { Subscription } from 'rxjs/Subscription';
 import { User } from './../../providers/login/user';
 import { LoginPage } from './../../pages/login/login';
-import { NavController, App, AlertController } from 'ionic-angular';
+import { NavController, App, AlertController, ModalController } from 'ionic-angular';
 import { LoginProvider } from './../../providers/login/login';
 import { Component, Input } from '@angular/core';
 
@@ -24,7 +24,7 @@ export class EztNavbarComponent {
   constructor( 
     private loginProvider: LoginProvider,
     private alertCtrl: AlertController,
-    public appCtrl: App
+    public modalController: ModalController ,
     ) {
       this.watcher = this.loginProvider.watchUser().subscribe( (user: User) => {
         this.hasUser = user;
@@ -50,6 +50,7 @@ export class EztNavbarComponent {
     await alert.present();
   }
   promtSignIn(){
-    this.appCtrl.getRootNav().push(LoginPage);
+    const loginModal = this.modalController.create(LoginPage);
+    loginModal.present();
   }
 }

@@ -1,3 +1,4 @@
+import { Pages } from './../../enums/pages';
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { FirebaseAuthentication } from '@ionic-native/firebase-authentication/ngx';
@@ -10,6 +11,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
   templateUrl: 'home.html'
 })
 export class HomePage {
+  pageName = Pages.Home;
   isCordova: boolean;
   callback: string;
 

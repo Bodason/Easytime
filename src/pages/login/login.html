@@ -1,54 +1,45 @@
-<ion-header>
-  <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>Login</ion-title>
-  </ion-navbar>
-</ion-header>
+<ion-header> 
+    <ion-toolbar>
+      <ion-title>
+        <ion-row align-items-center>
+          <ion-col float-left>
+            <div color="primary" class="toolbar-title"> {{ pageName }} </div>
+          </ion-col>
+          <ion-col>
+            <button float-right color="light" (click)=closeModal() ion-button round> Close </button>
+          </ion-col>
+        </ion-row>
+      </ion-title> 
+    </ion-toolbar>
+  </ion-header>
+<ion-content col-10 offset-1>
 
-<ion-content>
 
-  <h3 offset-1> Login page </h3>
-
-  <ion-grid>
-    <ion-row>
-      <ion-col>
-          <ion-item [formGroup]="formGroup">
-              <ion-label stacked> Email </ion-label>
-              <ion-input type=text formControlName="username"> </ion-input>
-            </ion-item>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-          <ion-item [formGroup]="formGroup">
-              <ion-label stacked> Password </ion-label>
-              <ion-input type="password" formControlName="password"> </ion-input>
-            </ion-item>
-      </ion-col>
-    </ion-row>
+  <ion-grid class="center-block login-container-bg-color">
+    <div class="grid-root">
+        <div class="title-area"> Enter login details </div>
+        <ion-row>
+            <ion-col col-10 offset-1>
+                <ion-item [formGroup]="formGroup">
+                    <ion-label stacked> Email </ion-label>
+                    <ion-input type=text formControlName="username"> </ion-input>
+                  </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row >
+            <ion-col col-10 offset-1>
+                <ion-item [formGroup]="formGroup" >
+                    <ion-label stacked> Password </ion-label>
+                    <ion-input type="password" formControlName="password"> </ion-input>
+                  </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row col-10 offset-1>
+            <ion-col>
+              <button (click)="login()" [disabled]="formGroup.invalid" color="light" ion-button float-right> Login </button>
+            </ion-col>
+          </ion-row>
+    </div>
   </ion-grid>
-
-
-  <ion-row  offset-1>
-    <ion-col>
-      <button (click)="login()" [disabled]="formGroup.invalid" color="light" ion-button round> send </button>
-    </ion-col>
-  </ion-row>
-
-  <ion-row  offset-1>
-    <ion-col>
-      {{ callback | json }}
-    </ion-col>
-  </ion-row>
-
-  <ion-row  offset-1>
-    <ion-col>
-      {{ creds | json }}
-    </ion-col>
-  </ion-row>
-
-
 
 </ion-content>
