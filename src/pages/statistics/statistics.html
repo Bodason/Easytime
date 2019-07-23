@@ -3,7 +3,7 @@
 
 <ion-content padding>
   Welcome to statistics page
-
-  <plotly-plot *ngIf="graph" [data]="graph.data" [config]="{ displayModeBar: false }" [layout]="graph.layout"></plotly-plot>
+  {{ platforms | json }}
+  <plotly-plot *ngIf="graph" name="'testington'" [data]="graph.data"  [config]="{ displayModeBar: false }" [layout]="graph.layout"></plotly-plot>
   
 </ion-content>

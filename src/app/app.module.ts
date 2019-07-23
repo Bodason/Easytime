@@ -30,6 +30,7 @@ import { AngularFireModule } from '@angular/fire';
 // import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { LoginProvider } from '../providers/login/login';
+import { GraphLibraryProvider } from '../providers/graph-library/graph-library';
 
 // 2. Add your credentials from step 1
 const config = {
@@ -86,7 +87,8 @@ const config = {
     AssignmentsLibraryProvider,
     DatePipe,
     TimerProvider,
-    LoginProvider
+    LoginProvider,
+    GraphLibraryProvider
   ]
 })
 export class AppModule {}

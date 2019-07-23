@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
+import { BarPlotComponent } from './bar-plot/bar-plot';
 @NgModule({
-	declarations: [],
+	declarations: [BarPlotComponent],
 	imports: [],
-	exports: []
+	exports: [BarPlotComponent]
 })
 export class ComponentsModule {}
