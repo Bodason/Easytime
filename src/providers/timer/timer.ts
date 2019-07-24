@@ -28,8 +28,8 @@ export class TimerProvider {
     const newTimerObject = Object.assign(new TimerObject(),assignment);
 
     const initialTime = assignment.timeElapsed;
-    const timeObs = this.timeObservable.subscribe( (timeElapsedTimer: number) => {
-      const time = timeElapsedTimer/(1000/this.timerInterval);
+    const timeObs = this.timeObservable.subscribe( () => {
+      const time  = (new Date().getTime() - new Date(assignment.StartTime).getTime()) / 1000;
       newTimerObject.timeSubject.next(initialTime+time);
     });
 
@@ -45,10 +45,10 @@ export class TimerProvider {
     await this.assignmentsLibrary.modifyAssignment(updatedAssignment);
     
     const newTimerObject = Object.assign(new TimerObject(),updatedAssignment);
-    
+
     const initialTime = updatedAssignment.timeElapsed;
-    const timeObs = this.timeObservable.subscribe( (timeElapsedTimer: number) => {
-      const time = timeElapsedTimer/(1000/this.timerInterval);
+    const timeObs = this.timeObservable.subscribe( () => {
+      const time  = (new Date().getTime() - new Date(updatedAssignment.StartTime).getTime()) / 1000;
       newTimerObject.timeSubject.next(initialTime+time);
     });
 
@@ -60,6 +60,7 @@ export class TimerProvider {
     const storedAssignment = await this.assignmentsLibrary.getAssignment(assignment.Id);
     storedAssignment.InProgress = false;
     storedAssignment.EndTime = new Date();
+
     let ElapsedTime = new Date(storedAssignment.EndTime).getTime() - new Date(storedAssignment.StartTime).getTime();
     storedAssignment.timeElapsed += (ElapsedTime/1000);
     await this.assignmentsLibrary.modifyAssignment(storedAssignment);
