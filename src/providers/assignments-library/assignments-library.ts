@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Platform } from 'ionic-angular/platform/platform';
 import { Storage } from '@ionic/storage';
 
 import { Assignment } from '../../classes/Assignment';
@@ -18,7 +17,6 @@ export class AssignmentsLibraryProvider {
 	assignments: Assignment[] = [];
 
 	constructor(
-		public platform: Platform,
 		public http: HttpClient,
 		public storage: Storage
 	) {
