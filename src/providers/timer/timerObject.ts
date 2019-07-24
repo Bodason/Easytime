@@ -6,5 +6,6 @@ export class TimerObject extends Assignment{
     timeSubject? : Subject<any>;
     constructor(){
       super();
+      this.timeSubject = new Subject();
     }
   }
