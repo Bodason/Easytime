@@ -5,7 +5,8 @@
   <h3 offset-1 col-11> Home page </h3>
 
   <ion-grid>
-    <p offset-1 col-11> Here we place some logic for showing a dashboard </p>
+    <p offset-1 col-11> You are running the app with the following platform(s) </p>
+    <p offset-1 col-11 *ngFor="let platform of platform"> {{ platform }}  </p>
   </ion-grid>
 
 </ion-content>
