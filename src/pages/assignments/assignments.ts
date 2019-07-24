@@ -1,3 +1,4 @@
+import { TimerProvider } from './../../providers/timer/timer';
 import { Component, Injectable } from '@angular/core';
 import { ModalController, NavController, NavParams } from 'ionic-angular';
 import { Assignment } from '../../classes/Assignment';
@@ -7,7 +8,6 @@ import { ToastController } from 'ionic-angular';
 import { AssignmentDetailsComponent } from '../../components/assignment-details/assignment-details';
 import { AddAssignmentComponent } from '../../components/add-assignment/add-assignment';
 import { Subscription } from 'rxjs/Subscription';
-import { TimerProvider } from '../../providers/timer/timer';
 
 @Component({
   selector: 'page-assignments',
@@ -26,7 +26,7 @@ export class AssignmentsPage {
           private assignmentsLibrary: AssignmentsLibraryProvider,
           private timer: TimerProvider  
           ) { 
-            this.getAssignments();
+
           }
 
   async getAssignments(): Promise<Assignment[]>{
@@ -39,12 +39,22 @@ export class AssignmentsPage {
     }
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad AssignmentsPage');
+  async ionViewDidLoad() {
+    this.assignments = await this.getAssignments();
+    this.assignments.forEach( (assignment: Assignment, index: number) => {
+      if(assignment.InProgress) {
+        this.timer.inizializeTimer(assignment);
+        const timerObject = this.timer.getTimerObject(assignment.Id)
+        timerObject.timeSubject.subscribe( (data) => {
+          this.assignments[index].timeElapsed = data;
+        });
+      }
+    });
     this.assignmentSubscription = this.assignmentsLibrary.subscribeToAssignments()
-      .subscribe((data: Assignment[]) => {
-        this.assignments = data;
+      .subscribe( (assignments: Assignment[]) => {
+        this.assignments = assignments;
       })
+
   }
 
   getDetails(assignment: Assignment){
@@ -60,13 +70,14 @@ export class AssignmentsPage {
   }
 
   async startTimer(index: number){
-    let timerObject = await this.timer.startTimer(this.assignments[index])
+    await this.timer.startTimer(this.assignments[index]);
+    const timerObject = this.timer.getTimerObject(this.assignments[index].Id)
     timerObject.timeSubject.subscribe( (data) => {
       this.assignments[index].timeElapsed = data;
     });
  }
 
-  stopTimer(assignment: Assignment, i){
+  stopTimer(assignment: Assignment){
     this.timer.stopTimer(assignment);
   }
 
