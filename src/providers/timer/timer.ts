@@ -69,8 +69,10 @@ export class TimerProvider {
     this.timerObservables[timerObservableindex].timerSubscription.unsubscribe();
     this.timerObservables.splice(timerObservableindex,1);
     
-    const timerObjectIndex =  this.timerObjects.findIndex( timerObject => { timerObject.Id ===  assignment.Id });
-    this.timerObjects.splice(timerObjectIndex,1);
+    const timerObjectIndex =  this.timerObjects.findIndex( timerObject => { return timerObject.Id ===  assignment.Id });
+    if(this.timerObjects && this.timerObjects.length > 0){
+      this.timerObjects.splice(timerObjectIndex,1)
+    } 
 
   }
 
